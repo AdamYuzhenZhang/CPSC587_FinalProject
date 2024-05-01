@@ -193,7 +193,17 @@ namespace DitzelGames.FastIK
                 if (i == Positions.Length - 1)
                     SetRotationRootSpace(Bones[i], Quaternion.Inverse(targetRotation) * StartRotationTarget * Quaternion.Inverse(StartRotationBone[i]));
                 else
-                    SetRotationRootSpace(Bones[i], Quaternion.FromToRotation(StartDirectionSucc[i], Positions[i + 1] - Positions[i]) * Quaternion.Inverse(StartRotationBone[i]));
+                {
+                    // Changed here. Constraints for rotation
+                    Quaternion desiredRotation = Quaternion.FromToRotation(StartDirectionSucc[i], Positions[i + 1] - Positions[i]) * Quaternion.Inverse(StartRotationBone[i]);
+                    if (i == 1)
+                    {
+                        Vector3 euler = desiredRotation.eulerAngles;
+                        desiredRotation = Quaternion.Euler(0, euler.y, 0);
+                    }
+                    SetRotationRootSpace(Bones[i], desiredRotation);
+                }
+                    //SetRotationRootSpace(Bones[i], Quaternion.FromToRotation(StartDirectionSucc[i], Positions[i + 1] - Positions[i]) * Quaternion.Inverse(StartRotationBone[i]));
                 SetPositionRootSpace(Bones[i], Positions[i]);
             }
         }
