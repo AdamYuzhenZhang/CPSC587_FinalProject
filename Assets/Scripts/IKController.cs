@@ -26,9 +26,9 @@ public class IKController : MonoBehaviour
     private bool FLMoving;
 
 
-    private float stepTime = 0.1f;
-    private float threshold = 1.2f;
-    private float stepHeight = 0.2f;
+    [SerializeField] private float stepTime = 0.1f;
+    [SerializeField] private float threshold = 1.2f;
+    [SerializeField] private float stepHeight = 0.2f;
     private void Update()
     {
         UpdateVisualizerPosition(FRTarget, FR);
